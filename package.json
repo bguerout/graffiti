@@ -1,0 +1,10 @@
+{
+    "name": "graffiti",
+    "version": "0.0.1",
+    "dependencies": {
+        "bytes": "0.2.0"
+    },
+    "engines": {
+        "node": ">=0.8"
+    }
+}
