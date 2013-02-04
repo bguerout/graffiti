@@ -15,27 +15,32 @@ var log = function (prefix, messages) {
 };
 
 exports = module.exports = function (opts) {
-    var options = opts || {withColor: true}
+    var options = opts || {withColor: true, logLevel: 0}
 
     var levels = {
-        debug: options.withColor ? green + "DEBUG" + reset : "DEBUG",
-        info: options.withColor ? blue + "INFO" + reset : "INFO",
-        warn: options.withColor ? purple + "WARN" + reset : "WARN",
-        error: options.withColor ? red + "ERROR" + reset : "ERROR"
+        debug: {prefix: options.withColor ? green + "DEBUG" + reset : "DEBUG", level: 0},
+        info: {prefix: options.withColor ? blue + "INFO" + reset : "INFO", level: 1},
+        warn: {prefix: options.withColor ? purple + "WARN" + reset : "WARN", level: 2},
+        error: {prefix: options.withColor ? red + "ERROR" + reset : "ERROR", level: 3}
     };
 
     return {
         debug: function (message) {
-            log(levels.debug, arguments);
+            if (options.logLevel <= levels.debug.level)
+                log(levels.debug.prefix, arguments);
         },
         info: function (message) {
-            log(levels.info, arguments);
+            if (options.logLevel <= levels.info.level)
+                log(levels.info.prefix, arguments);
         },
         warn: function (message) {
-            log(levels.warn, arguments);
+            if (options.logLevel <= levels.warn.level)
+
+                log(levels.warn.prefix, arguments);
         },
         error: function (message) {
-            log(levels.error, arguments);
+            if (options.logLevel <= levels.error.level)
+                log(levels.error.prefix, arguments);
         },
         /**
          *  Custom express logger based upon express.logger('dev')
@@ -53,7 +58,7 @@ exports = module.exports = function (opts) {
 
                 len = isNaN(len) ? '' : len = ' - ' + bytes(len);
 
-                return levels.debug + ' \033[90m' + req.method
+                return levels.debug.prefix + ' \033[90m' + req.method
                     + ' ' + req.originalUrl + ' '
                     + '\033[' + color + 'm' + res.statusCode
                     + ' \033[90m'
