@@ -7,7 +7,7 @@
         "url": "git://github.com/bguerout/graffiti.git"
     },
     "main": "./index.js",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "dependencies": {
         "bytes": "0.2.0"
     },

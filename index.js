@@ -4,7 +4,6 @@ var green = '\033[32m';
 var blue = '\033[34m';
 var purple = '\033[35m';
 var red = '\033[31m';
-var graffiti;
 
 var log = function (prefix, messages) {
     if (typeof messages[0] === 'string') {
