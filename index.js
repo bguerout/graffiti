@@ -1,9 +1,10 @@
 var bytes = require('bytes');
-var reset = '\033[0m';
-var green = '\033[32m';
-var blue = '\033[34m';
-var purple = '\033[35m';
-var red = '\033[31m';
+var reset = '\033[0m',
+    green = '\033[32m',
+    blue = '\033[34m',
+    purple = '\033[35m',
+    red = '\033[31m',
+    grey = '\033[90m';
 
 var log = function (prefix, messages) {
     if (typeof messages[0] === 'string') {
@@ -58,13 +59,22 @@ exports = module.exports = function (opts) {
 
                 len = isNaN(len) ? '' : len = ' - ' + bytes(len);
 
-                return levels.debug.prefix + ' \033[90m' + req.method
-                    + ' ' + req.originalUrl + ' '
-                    + '\033[' + color + 'm' + res.statusCode
-                    + ' \033[90m'
-                    + (new Date - req._startTime)
-                    + 'ms' + len
-                    + '\033[0m';
+                if (options.withColor === true) {
+                    return levels.debug.prefix
+                        + ' ' + grey + req.method
+                        + ' ' + req.originalUrl + ' '
+                        + '\033[' + color + 'm' + res.statusCode
+                        + ' ' + grey + (new Date - req._startTime)
+                        + 'ms' + len
+                        + reset;
+                } else {
+                    return levels.debug.prefix
+                        + ' ' + req.method
+                        + ' ' + req.originalUrl
+                        + ' ' + res.statusCode
+                        + ' ' + (new Date - req._startTime) + 'ms' + len
+                }
+
             });
         }
     }
